@@ -5,10 +5,19 @@ namespace DapperNpgsqlConsoleCore
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            // TODO - System.Configuration not present in .NET Core so this needs to be redone
-            string connectionString = "Server=DBSERVER;Port=5432;User Id=DBUSER;Password=DBPASS;Database=DBNAME;";
+            var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+            
+            // Keeping things simple and looking for connection string in environment variable
+            // "Server=<db server>;Port=5432;User Id=<db user id>;Password=<db pass>;Database=<db name>;"
+            var connectionString = config.GetSection("DAPPER_NPGSQL_CONN_STRING").Value;
+            
+            if (string.IsNullOrEmpty(connectionString)) 
+            {
+                Console.WriteLine("Specify database connection string in DAPPER_NPGSQL_CONN_STRING environment variable.");
+                return 1;
+            }
 
             using (var t = new DataRetriever(connectionString))
             {
@@ -29,6 +38,8 @@ namespace DapperNpgsqlConsoleCore
                 {
                     Console.WriteLine("{0} - {1}", style.Name, style.Description);
                 }
+                
+                return 0;
             }
         }
     }
