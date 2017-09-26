@@ -1,6 +1,6 @@
 # DapperNpgsqlExampleCore
 Simple demo for using dapper and npgsql with .NET Core. This is a code 
-sample for a blog post at http://www.thespons.net/2015/04/28/dapper-and-npgsql-part-two.html. 
+sample for a blog post at https://thespons.net/2017/09/26/dapper-and-npgsql-with-dotnet-core.html. 
 
 This is just a console application written in C#. It's designed to 
 be used with an an already existing (preferably empty) Postgres database, 
